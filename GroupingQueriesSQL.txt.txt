@@ -1,0 +1,88 @@
+SQL> select count(*),job from emp group by job;
+
+  COUNT(*) JOB
+---------- ---------
+         4 CLERK
+         4 SALESMAN
+         1 PRESIDENT
+         3 MANAGER
+         2 ANALYST
+
+SQL> select sum(sal) from emp;
+
+  SUM(SAL)
+----------
+     29025
+
+SQL> select min(sal),max(sal),avg(sal) from emp;
+
+  MIN(SAL)   MAX(SAL)   AVG(SAL)
+---------- ---------- ----------
+       800       5000 2073.21429
+
+SQL> select max(sal) from emp where job='Salesman';
+
+  MAX(SAL)
+----------
+
+
+SQL> select max(sal) from emp group by Job having job='SALESMAN';
+
+  MAX(SAL)
+----------
+      1600
+
+SQL> select avg(sal) from emp group by deptno having deptno=20;
+
+  AVG(SAL)
+----------
+      2175
+
+SQL> select count(*) from emp group by deptno;
+
+  COUNT(*)
+----------
+         6
+         5
+         3
+
+SQL> select distinct(deptno) from emp;
+
+    DEPTNO
+----------
+        30
+        20
+        10
+
+SQL> select count(*) from emp group by deptno having deptno=10;
+
+  COUNT(*)
+----------
+         3
+
+SQL> select COUNT(*) from emp group by Job having job='MANAGER';
+
+  COUNT(*)
+----------
+         3
+
+SQL> select e.ename,e.deptno,d.dname,d.deptno from emp e join dept d on (e.deptno=d.deptno);
+
+ENAME          DEPTNO DNAME              DEPTNO
+---------- ---------- -------------- ----------
+CLARK              10 ACCOUNTING             10
+KING               10 ACCOUNTING             10
+MILLER             10 ACCOUNTING             10
+JONES              20 RESEARCH               20
+FORD               20 RESEARCH               20
+ADAMS              20 RESEARCH               20
+SMITH              20 RESEARCH               20
+SCOTT              20 RESEARCH               20
+WARD               30 SALES                  30
+TURNER             30 SALES                  30
+ALLEN              30 SALES                  30
+JAMES              30 SALES                  30
+BLAKE              30 SALES                  30
+MARTIN             30 SALES                  30
+
+14 rows selected.
