@@ -1,0 +1,377 @@
+SQL> variable c number;
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  a number:=&a;
+  3  b number:=&b;
+  4  begin
+  5  :c:=a+b;
+  6* end;
+SQL> /
+Enter value for a: 2
+old   2: a number:=&a;
+new   2: a number:=2;
+Enter value for b: 5
+old   3: b number:=&b;
+new   3: b number:=5;
+
+PL/SQL procedure successfully completed.
+
+SQL> print c;
+
+         C
+----------
+         7
+
+--------------------BIND VARIABLE-----------------------
+
+
+SQL> variable v_job varchar2(10)
+SQL> variable v_sal number
+SQL> variable v_ename varchar2(10)
+SQL> /
+Enter value for v_empno: 7900
+old   2:     v_empno emp.empno%type:=&v_empno;
+new   2:     v_empno emp.empno%type:=7900;
+
+PL/SQL procedure successfully completed.
+
+SQL> print v_ename
+
+V_ENAME
+--------------------------------
+JAMES
+
+SQL> print v_job
+
+V_JOB
+--------------------------------
+CLERK
+
+SQL>
+
+------------------SEQUENCE AND PLSQL-----------------------
+SQL> create sequence seq start with 1 increment by 1 maxvalue 20;
+
+Sequence created.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  v_newid number;
+  3  begin
+  4  v_newid:=seq.nextval;
+  5  dbms_output.put_line(v_newid);
+  6* end;
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+--------------NESTED------------
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  v_father_name varchar2(20):='Patrick';
+  3  v_date_of_birth date:='20-Apr-1972';
+  4  begin
+  5  declare
+  6  v_child_name varchar2(20):='Mike';
+  7  v_date_of_birth date:='12-Dec-2002';
+  8  begin
+  9  dbms_output.put_line('Fathers name: '||v_father_name);
+ 10  dbms_output.put_line('DOB: '||v_date_of_birth);
+ 11  dbms_output.put_line('Childs name: '||v_child_name);
+ 12  dbms_output.put_line('DOB: '||v_date_of_birth);
+ 13  end;
+ 14* end;
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> set serveroutput on;
+SQL> /
+Fathers name: Patrick
+DOB: 12-DEC-02
+Childs name: Mike
+DOB: 12-DEC-02
+
+PL/SQL procedure successfully completed.
+
+-----------------------------------------------------
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  v_myage number:=&v_myage;
+  3  begin
+  4  if v_myage<11 then
+  5  dbms_output.put_line('I am a child');
+  6  elsif v_myage<20 then
+  7  dbms_output.put_line('I am young');
+  8  elsif v_myage<30 then
+  9  dbms_output.put_line('I am in  my twenties');
+ 10  elsif v_myage<40 then
+ 11  dbms_output.put_line('I am in my thirties');
+ 12  else
+ 13  dbms_output.put_line('I am about to die');
+ 14  end if;
+ 15* end;
+ 16  /
+Enter value for v_myage: 20
+old   2: v_myage number:=&v_myage;
+new   2: v_myage number:=20;
+I am in  my twenties
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for v_myage: 55
+old   2: v_myage number:=&v_myage;
+new   2: v_myage number:=55;
+I am about to die
+
+PL/SQL procedure successfully completed.
+
+-------------FOR LOOP---------------------------------
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  v_counter number:=1;
+  3  begin
+  4  loop
+  5  dbms_output.put_line(v_counter);
+  6  v_counter:=v_counter+1;
+  7  exit when v_counter>10;
+  8  end loop;
+  9* end;
+SQL> /
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+PL/SQL procedure successfully completed.
+
+---------------------WHILE---------------
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  v_counter number:=1;
+  3  begin
+  4  while v_counter<9
+  5  loop
+  6  dbms_output.put_line(v_counter);
+  7  v_counter:=v_counter+1;
+  8  end loop;
+  9* end;
+SQL> /
+1
+2
+3
+4
+5
+6
+7
+8
+
+PL/SQL procedure successfully completed.
+
+SQL>
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  begin
+  2  for i in  1..5
+  3  loop
+  4  for j in 1..i
+  5  loop
+  6  dbms_output.put('*');
+  7  end loop;
+  8  dbms_output.put_line('');
+  9  end loop;
+ 10* end;
+SQL> /
+*
+**
+***
+****
+*****
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  v_emp emp%rowtype;
+  3  v_empno emp.empno%type:=&v_empno;
+  4  begin
+  5  select * into v_emp from emp where empno=v_empno;
+  6  dbms_output.put_line(v_emp.ename);
+  7* end;
+SQL> /
+Enter value for v_empno: 7900
+old   3: v_empno emp.empno%type:=&v_empno;
+new   3: v_empno emp.empno%type:=7900;
+JAMES
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  v_emp emp%rowtype;
+  3  v_empno emp.empno%type:=&v_empno;
+  4  begin
+  5  select * into v_emp from emp where empno=v_empno;
+  6  insert into demo values(v_emp.sal,v_emp.ename,v_emp.sal);
+  7  dbms_output.put_line(v_emp.ename);
+  8* end;
+SQL> /
+Enter value for v_empno: 7900
+old   3: v_empno emp.empno%type:=&v_empno;
+new   3: v_empno emp.empno%type:=7900;
+JAMES
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from demo;
+
+        ID NAME                                            DEPT
+---------- ----------------------------------------------- ----------
+       950 JAMES                                           950
+         1 ABC                                             Finance
+         2 EFG                                             IT
+---------------------------------------------------------------------------------
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  cursor c1 is select ename,sal from emp where deptno=10;
+  3  v_name emp.ename%type;
+  4  v_sal emp.sal%type;
+  5  begin
+  6  open c1;
+  7  loop
+  8  fetch c1 into v_name,v_sal;
+  9  exit when c1%notfound;
+ 10  dbms_output.put_line(v_name||v_sal);
+ 11  end loop;
+ 12  close c1;
+ 13* end;
+SQL> /
+CLARK2450
+KING5000
+MILLER1300
+
+PL/SQL procedure successfully completed.
+
+SQL>
+
+
+------------------------------------------------------
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  cursor c1 is select * from emp where deptno=10;
+  3  v_emprec emp%rowtype;
+  4  begin
+  5  open c1;
+  6  loop
+  7  fetch c1 into v_emprec;
+  8  exit when c1%notfound;
+  9  dbms_output.put_line(v_emprec.ename||v_emprec.sal);
+ 10  end loop;
+ 11  close c1;
+ 12* end;
+SQL> /
+CLARK2450
+KING5000
+MILLER1300
+
+PL/SQL procedure successfully completed.
+
+SQL>
+
+
+
+------------------------------------
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2      cursor c1 is select * from emp where deptno=10;
+  3      v_emprec emp%rowtype;
+  4      begin
+  5  if not c1%isopen then
+  6     open c1;
+  7  end if;
+  8      loop
+  9      fetch c1 into v_emprec;
+ 10      exit when c1%notfound and c1%rowcount=1;
+ 11      dbms_output.put_line(v_emprec.ename||v_emprec.sal);
+ 12     end loop;
+ 13     close c1;
+ 14*   end;
+SQL> /
+
+-----------------------------------
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2        cursor c1 is select empno,hiredate from emp where deptno=10;
+  3          v_emprec emp%rowtype;
+  4          begin
+  5      for i in c1
+  6          loop
+  7      dbms_output.put_line(i.empno||i.hiredate);
+  8         end loop;
+  9*      end;
+SQL> /
+778209-JUN-81
+783917-NOV-81
+793423-JAN-82
+
+PL/SQL procedure successfully completed.
+-------------------------------------------
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2          begin
+  3  for i in(select empno,hiredate from emp where deptno=10)
+  4          loop
+  5      dbms_output.put_line(i.empno||i.hiredate);
+  6         end loop;
+  7*      end;
+  8  /
+778209-JUN-81
+783917-NOV-81
+793423-JAN-82
+
+PL/SQL procedure successfully completed.
