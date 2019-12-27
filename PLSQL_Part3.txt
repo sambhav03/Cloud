@@ -1,0 +1,91 @@
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  cursor c1(v_deptno number,v_job varchar2) is select * from emp where deptno=v_deptno and job=v_job;
+  3  v_emprec emp%rowtype;
+  4          begin
+  5  if not c1%isopen then
+  6  open c1(&v_deptno,'&v_job');
+  7  end if;
+  8          loop
+  9  fetch c1 into v_emprec;
+ 10  exit when c1%notfound;
+ 11      dbms_output.put_line(v_emprec.ename||v_emprec.sal);
+ 12         end loop;
+ 13  close c1;
+ 14*      end;
+SQL> /
+Enter value for v_deptno: 30
+Enter value for v_job: CLERK
+old   6: open c1(&v_deptno,'&v_job');
+new   6: open c1(30,'CLERK');
+JAMES950
+
+PL/SQL procedure successfully completed.
+
+--------------------------------------
+
+EXCEPTION HANDLING
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  v_deptno emp.deptno%type:=&v_deptno;
+  3  v_ename emp.ename%type;
+  4  begin
+  5  select ename into v_ename from emp where deptno=v_deptno;
+  6  exception
+  7  when too_many_rows then
+  8  dbms_output.put_line('Manyy Rowss');
+  9  when no_data_found then
+ 10  dbms_output.put_line('No Value');
+ 11* end;
+SQL> /
+Enter value for v_deptno: 50
+old   2: v_deptno emp.deptno%type:=&v_deptno;
+new   2: v_deptno emp.deptno%type:=50;
+No Value
+
+PL/SQL procedure successfully completed.
+---------------------------------------------------------
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  v_deptno emp.deptno%type:=&v_deptno;
+  3  v_ename emp.ename%type;
+  4  begin
+  5  select ename into v_ename from emp where deptno=v_deptno;
+  6  exception
+  7  when others then
+  8  dbms_output.put_line('An error has occured!');
+  9* end;
+SQL> /
+Enter value for v_deptno: 50
+old   2: v_deptno emp.deptno%type:=&v_deptno;
+new   2: v_deptno emp.deptno%type:=50;
+An error has occured!
+
+PL/SQL procedure successfully completed.
+
+--------------------------------------------------------------
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  e1 exception;
+  3  pragma exception_init(e1,-02292);
+  4  begin
+  5  delete from dept where deptno=10;
+  6  exception
+  7  when e1 then
+  8  dbms_output.put_line('An error has occured');
+  9  dbms_output.put_line(SQLERRM);
+ 10* end;
+SQL> /
+An error has occured
+ORA-02292: integrity constraint (SCOTT.FK_DEPTNO) violated - child record found
+
+PL/SQL procedure successfully completed.
