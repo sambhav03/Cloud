@@ -1,0 +1,78 @@
+
+
+
+PL/SQL procedure successfully completed.
+
+SQL> set serveroutput on;
+SQL> /
+The name isJams
+----------------------------------------------------------------
+
+
+SQL> declare
+  2  v_a number(3):=2;
+  3  v_b number(3):=2;
+  4  begin
+  5  dbms_output.put_line('The addition is:'||(v_a+v_b));
+  6  end;
+  7  /
+The addition is:4
+
+PL/SQL procedure successfully completed.
+
+-------------------------------------------------------------------
+
+SQL> select &col1,&col2 from &tabname &where;
+Enter value for col1: empno
+Enter value for col2: ename
+Enter value for tabname: emp
+Enter value for where: where deptno=30
+old   1: select &col1,&col2 from &tabname &where
+new   1: select empno,ename from emp where deptno=30
+
+     EMPNO ENAME
+---------- ----------
+      7499 ALLEN
+      7521 WARD
+      7654 MARTIN
+      7698 BLAKE
+      7844 TURNER
+      7900 JAMES
+
+6 rows selected.
+
+------------------------------------------------------------------------
+SQL> declare
+  2  v_a number(3):=&v_num1;
+  3  v_b number(3):=&v_num2;
+  4  begin
+  5  dbms_output.put_line('The addition is:'||(v_a+v_b));
+  6  end;
+  7  /
+Enter value for v_num1: 10
+old   2: v_a number(3):=&v_num1;
+new   2: v_a number(3):=10;
+Enter value for v_num2: 20
+old   3: v_b number(3):=&v_num2;
+new   3: v_b number(3):=20;
+The addition is:30
+
+PL/SQL procedure successfully completed.
+
+
+----------------------------------------------------------------------------
+SQL> declare
+  2  v_empno emp.empno%type:=&v_empno;
+  3    v_ename emp.ename%type;
+  4      v_job v_ename%type;
+  5      v_sal emp.sal%type;
+  6     begin
+  7      select ename,job,sal into v_ename,v_job,v_sal from emp where empno=v_empno;
+  8      dbms_output.put_line(v_ename||v_job||v_sal);
+  9      end;
+ 10  /
+Enter value for v_empno: 7900
+old   2: v_empno emp.empno%type:=&v_empno;
+new   2: v_empno emp.empno%type:=7900;
+JAMESCLERK950
+
