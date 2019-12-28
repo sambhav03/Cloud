@@ -1,0 +1,138 @@
+SQL> ed
+Wrote file afiedt.buf
+
+  1  create or replace procedure p2(v_empno in emp.empno%type,v_ename out emp.ename%type,v_sal out emp.sal%type)
+  2  is
+  3  begin
+  4  select ename,sal into v_ename,v_sal from emp where empno=v_empno;
+  5* end;
+SQL> /
+
+Procedure created.
+
+
+SQL> execute p2(7900,:p_name,:p_sal);
+
+PL/SQL procedure successfully completed.
+
+SQL> print p_name
+
+P_NAME
+--------------------------------
+JAMES
+
+---------------------------------------------------------------------
+
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  create or replace procedure p3(p_phone_no  in out varchar2)
+  2  is
+  3  begin
+  4  p_phone_no:='(' || substr(p_phone_no,1,3) || ')' || substr(p_phone_no,4,3) || '-' || substr(p_phone_no,7);
+  5* end;
+SQL> /
+
+Procedure created.
+
+
+SQL> variable d varchar2(15)
+SQL> execute :d:='8802894400'
+
+PL/SQL procedure successfully completed.
+
+SQL> print :d
+
+D
+--------------------------------
+8802894400
+
+SQL> execute p3(:d)
+
+PL/SQL procedure successfully completed.
+
+SQL> print :d
+
+D
+--------------------------------
+(880)289-4400
+
+----------------------------FUNCTION------------------------------------------------
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  create or replace function fun1(a in number,b in number)
+  2  return number
+  3  is
+  4  c number;
+  5  begin
+  6  c:=a+b;
+  7  return (c);
+  8* end;
+SQL> /
+
+Function created.
+
+SQL> variable z number
+
+SQL> exec :z:=fun1(10,20)
+
+PL/SQL procedure successfully completed.
+
+SQL> print z
+
+         Z
+----------
+        30
+
+----------------------------------------------------------------
+SQL> ed
+Wrote file afiedt.buf
+
+  1  create or replace package pack1
+  2  is procedure p4( a in number,b in number, c out number);
+  3* end;
+SQL> /
+
+Package created.
+
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  create or replace package body pack1
+  2  is
+  3  function f5(x in number,y in number)
+  4  return number
+  5  is
+  6  z number;
+  7  begin
+  8  z:=x+y;
+  9  return (z);
+ 10  end;
+ 11  procedure p4(a in number,b in number, c out number)
+ 12  is
+ 13  begin
+ 14  c:=f5(a,b);
+ 15  end;
+ 16* end;
+SQL> /
+
+Package body created.
+
+SQL> variable p number
+SQL> exec pack1.p4(10,20,:p)
+
+PL/SQL procedure successfully completed.
+
+SQL> print p
+
+         P
+----------
+        30
+
+SQL>
