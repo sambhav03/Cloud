@@ -1,0 +1,181 @@
+JAVA TEST
+
+QUESTION 1
+Create a class called point with data members to rep[resent the x and y coordinates and have a function to display the coordinates. Derive a class called Circle from Point with a data member to represent the radius.
+Have a functuion called area() to calculate the area of the circle and also display the coordinates.
+Derive a class Cylinder from Circle with a data member to represent the height of the cylinder.Have a function called Volume()to calculate the volume of the Cylinder.
+
+-------------------------------------------------------------------------
+import java.util.Scanner;
+ class Point {
+	float x;
+	float y;
+	void getcoordinates()
+	{
+		System.out.println("Enter X and Y:");
+		Scanner sc=new Scanner(System.in);
+		x=sc.nextFloat();
+		y=sc.nextFloat();
+		sc.close();
+	}
+	void displaycoordinates()
+	{
+		System.out.println("X: "+x+"Y: "+y);
+	}
+
+}
+
+ class Circle extends Point
+{
+	float radius;
+	void calculate_area(int x,int y)
+	{
+		System.out.println("Enter radius");
+		Scanner sc=new Scanner(System.in);
+		radius=sc.nextFloat();
+		double area=3.14*radius*radius;
+		System.out.println("Area of the circle: "+area);
+		System.out.println("X: "+x+"Y: "+y);
+		
+	}
+}
+public class Cylinder extends Circle {
+
+	float height;
+	void calculate_Volume()
+	{
+		System.out.println("Enter X and Y:");
+		Scanner sc=new Scanner(System.in);
+		x=sc.nextFloat();
+		y=sc.nextFloat();
+		System.out.println("Enter radius and height");
+		radius=sc.nextFloat();
+		height=sc.nextFloat();
+		double area=3.14*radius*radius;
+		double volume=3.14*radius*radius*height;
+		System.out.println("Area of the circle: "+area);
+		System.out.println("Volume of the cylinder: "+volume);
+		displaycoordinates();
+	}
+	public static void main(String[] args) {
+	
+		Cylinder cy=new Cylinder();
+		cy.calculate_Volume();
+
+	}
+
+}
+
+
+OUTPUT:
+Enter X and Y:
+2
+3
+Enter radius and height
+5
+6
+Area of the circle: 78.5
+Volume of the cylinder: 471.0
+X: 2.0Y: 3.0
+
+
+QUESTION 2
+a) Create a class to hold information about books.Write a function to display information about the book.
+Data members: Title,Author,cost,no_of_books
+b) Create 3 instances of the above class and initialize the members of the class with the data accepted from the user.
+c) Accept a title and the no_of_books required from the user. Find whether the book exists. If it exists, check if the no_of_books are sufficient and if so indicate the total cost of the books.
+
+-----------------------------------------------------------------
+import java.util.Scanner;
+
+class Book 
+{
+	String title;
+	String author;
+	double cost;
+	int no_of_books;
+
+	public Book(String title, String author, double cost, int no_of_books) 
+	{
+		this.title = title;
+		this.author = author;
+		this.cost = cost;
+		this.no_of_books = no_of_books;
+	}
+
+	void display() 
+	{
+		System.out.println("Title: " + title + ", Author: " + author);
+		System.out.println("Cost: " + cost);
+	}
+}
+
+public class Test2
+{
+	
+	public static void main(String[] args)
+	{
+		
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Enter data for books.");
+		Book x[] = new Book[3];
+		
+		for (int i = 0; i < 3; i++)
+		{
+			System.out.print("Enter title: ");
+			String title = sc.next();
+			System.out.print("Enter author: ");
+			String author = sc.next();
+			System.out.print("Enter cost: ");
+			double cost = sc.nextDouble();
+			System.out.print("Enter no of books: ");
+			int no_of_books = sc.nextInt();
+			x[i] = new Book(title, author, cost, no_of_books);
+		}
+
+		System.out.print("\nEnter title to search: ");
+		String title = sc.next();
+		System.out.print("Enter no of books required: ");
+		int no_of_books = sc.nextInt();
+
+		boolean found = false;
+		for (int i = 0; i < 3; i++) 
+		{
+			if (title.equals(x[i].title) && (no_of_books <= x[i].no_of_books))
+			{
+				found = true;
+				x[i].display();
+				System.out.println("Books are sufficient.");
+				System.out.println("Total cost of books: " + (x[i].cost * no_of_books));
+			}
+		}
+
+		if (found == false) 
+		{
+			System.out.println("Sorry, No books found.");
+		}
+	}
+}
+
+OUTPUT:
+Enter data for books.
+Enter title: HarryPotter
+Enter author: JKR
+Enter cost: 500
+Enter no of books: 10
+Enter title: DaVinciCode
+Enter author: Dan
+Enter cost: 1000
+Enter no of books: 10
+Enter title: Adultery
+Enter author: PauloCohelo
+Enter cost: 750
+Enter no of books: 10
+
+Enter title to search: Adultery
+Enter no of books required: 5
+Title: Adultery, Author: PauloCohelo
+Cost: 750.0
+Books are sufficient.
+Total cost of books: 3750.0
