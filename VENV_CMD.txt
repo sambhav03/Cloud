@@ -1,0 +1,49 @@
+Microsoft Windows [Version 10.0.16299.64]
+(c) 2017 Microsoft Corporation. All rights reserved.
+
+C:\Users\lab365>cd C:\Users\lab365\Desktop
+
+C:\Users\lab365\Desktop>cd PythonTraining
+
+C:\Users\lab365\Desktop\PythonTraining>dir
+ Volume in drive C has no label.
+ Volume Serial Number is 683A-280E
+
+ Directory of C:\Users\lab365\Desktop\PythonTraining
+
+01/06/2020  07:56 PM    <DIR>          .
+01/06/2020  07:56 PM    <DIR>          ..
+01/06/2020  07:56 PM    <DIR>          Anaconda
+01/06/2020  03:18 AM    <DIR>          bin
+01/05/2020  08:19 PM    <DIR>          lib
+01/05/2020  08:19 PM    <DIR>          log
+01/05/2020  08:19 PM    <DIR>          releases
+               0 File(s)              0 bytes
+               7 Dir(s)  792,721,006,592 bytes free
+
+C:\Users\lab365\Desktop\PythonTraining>python -m venv myvenv1
+
+C:\Users\lab365\Desktop\PythonTraining>dir
+ Volume in drive C has no label.
+ Volume Serial Number is 683A-280E
+
+ Directory of C:\Users\lab365\Desktop\PythonTraining
+
+01/06/2020  08:12 PM    <DIR>          .
+01/06/2020  08:12 PM    <DIR>          ..
+01/06/2020  07:56 PM    <DIR>          Anaconda
+01/06/2020  03:18 AM    <DIR>          bin
+01/05/2020  08:19 PM    <DIR>          lib
+01/05/2020  08:19 PM    <DIR>          log
+01/06/2020  08:12 PM    <DIR>          myvenv1
+01/05/2020  08:19 PM    <DIR>          releases
+               0 File(s)              0 bytes
+               8 Dir(s)  792,697,745,408 bytes free
+
+C:\Users\lab365\Desktop\PythonTraining>cd myvenv1
+
+C:\Users\lab365\Desktop\PythonTraining\myvenv1>cd scripts
+
+C:\Users\lab365\Desktop\PythonTraining\myvenv1\Scripts>activate
+
+(myvenv1) C:\Users\lab365\Desktop\PythonTraining\myvenv1\Scripts>
