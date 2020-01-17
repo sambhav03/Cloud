@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+ <form action='/login/verify/' method='post'>
+     {%csrf_token%}
+    username:<input type='text' name='uname'/><br/>
+    password:<input type='password' name='pw'/><br/>
+    <input type='submit' value ='LOGIN'/>
+    </form>
+
+</body>
+</html>
